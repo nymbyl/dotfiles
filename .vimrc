@@ -90,6 +90,7 @@ Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 
 Plugin 'edkolev/tmuxline.vim'
+Plugin 'mileszs/ack.vim'
 
 
 "
@@ -174,3 +175,6 @@ let g:airline_theme='zenburn'
 "let g:netrw_liststyle=3
 
 let g:tmuxline_preset = 'tmux'
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
