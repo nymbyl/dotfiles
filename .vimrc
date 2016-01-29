@@ -92,6 +92,13 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'mileszs/ack.vim'
 
+" https://github.com/Shougo/unite.vim
+Plugin 'shougo/unite.vim'
+
+Plugin 'tpope/vim-commentary' " git://github.com/tpope/vim-commentary.git
+Plugin 'tpope/vim-repeat' 
+
+Plugin 'svermeulen/vim-easyclip'
 
 "
 call vundle#end()    
@@ -124,10 +131,16 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_autosave = 0
 
+
 set clipboard=unnamed
 set wildmenu
 set wildmode=longest:full,full
 
+"http://stackoverflow.com/questions/1497958/how-do-i-use-vim-registers
+" to delete a character without replacing default register
+noremap x "_x
+" to paste in visual mode without updating the default register:
+vnoremap p "_dP
 
 function! WrapForTmux(s)
   if !exists('$TMUX')
@@ -156,11 +169,10 @@ syntax enable
 set backspace=2 " make backspace work like most other apps
 set backspace=indent,eol,start
 
-"let g:airline_section_b='%F'
+let g:airline_section_b='%F'
 let g:airline_section_y='%{fugitive#statusline()}' " Git 
 "set statusline+=%{fugitive#statusline()} "  Git Hotness
 "set statusline=%F 
-
 
 
 let g:CommandTFileScanner="find"
@@ -177,4 +189,17 @@ let g:airline_theme='zenburn'
 let g:tmuxline_preset = 'tmux'
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+"Platinum Searcher
+
+nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+if executable('pt')
+  let g:unite_source_grep_command = 'pt'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_encoding = 'utf-8'
+endif
+
+"Unite
+let g:unite_source_history_yank_enable = 1
 
