@@ -72,7 +72,7 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'gmarik/Vundle.vim'
 Plugin 'yegappan/grep.vim'
 Plugin 'vim-scripts/taglist.vim'
-Plugin 'vim-scripts/EnhCommentify.vim'
+"Plugin 'vim-scripts/EnhCommentify.vim'
 Plugin 'fatih/vim-go'
 
 Plugin 'kchmck/vim-coffee-script'
@@ -95,10 +95,12 @@ Plugin 'mileszs/ack.vim'
 " https://github.com/Shougo/unite.vim
 Plugin 'shougo/unite.vim'
 
-Plugin 'tpope/vim-commentary' " git://github.com/tpope/vim-commentary.git
+Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat' 
 
 Plugin 'svermeulen/vim-easyclip'
+
+Plugin 'junegunn/fzf'
 
 "
 call vundle#end()    
@@ -202,4 +204,12 @@ endif
 
 "Unite
 let g:unite_source_history_yank_enable = 1
+
+
+:au FocusLost * :set norelativenumber
+:au FocusGained * :set relativenumber
+
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+autocmd CursorMoved * :set relativenumber
 
