@@ -102,6 +102,9 @@ Plugin 'svermeulen/vim-easyclip'
 
 Plugin 'junegunn/fzf'
 
+Plugin 'lambdatoast/elm.vim'
+
+Plugin 'dietsche/vim-lastplace'
 "
 call vundle#end()    
 
@@ -133,6 +136,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_autosave = 0
 
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
 set clipboard=unnamed
 set wildmenu
@@ -192,6 +196,7 @@ let g:tmuxline_preset = 'tmux'
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
+ 
 "Platinum Searcher
 
 nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
@@ -205,6 +210,7 @@ endif
 "Unite
 let g:unite_source_history_yank_enable = 1
 
+let g:gitgutter_max_signs = 2048
 
 :au FocusLost * :set norelativenumber
 :au FocusGained * :set relativenumber
@@ -213,3 +219,8 @@ autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 autocmd CursorMoved * :set relativenumber
 
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+" if has("autocmd")
+"  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" endif
