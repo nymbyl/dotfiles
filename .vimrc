@@ -1,6 +1,21 @@
 :syn on
 
-:colorscheme mustang 
+if has("gui_running")
+  set guifont=DejaVu\ Sans\ Mono\ 16
+endif
+
+let g:solarized_termcolors=256 
+set t_Co=256 
+set background=dark
+":colorscheme gruvbox
+":colorscheme solarized
+":colorscheme solarized8_dark
+":colorscheme dracula
+":colorscheme mustang
+":colorscheme desert
+":color dracula
+:colorscheme mustang
+
 :set nu
 :set ignorecase
 :set smartcase
@@ -29,8 +44,6 @@ nmap <silent> <C-j> :wincmd j<CR>
 "nmap <silent> <C-Right> :wincmd l<CR>
 nmap <silent> <C-h> :wincmd h<CR>
 nmap <silent> <C-l> :wincmd l<CR>
-
-
 
 :set backupdir=~/.backup
 :set directory=~/.backup
@@ -67,15 +80,17 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-dispatch'
 
-
+Plugin 'nazo/pt.vim'
 Plugin 'gmarik/Vundle.vim'
-Plugin 'yegappan/grep.vim'
-Plugin 'vim-scripts/taglist.vim'
+Plugin 'dracula/vim'
+"Plugin 'yegappan/grep.vim'
+"Plugin 'vim-scripts/taglist.vim'
 "Plugin 'vim-scripts/EnhCommentify.vim'
 Plugin 'fatih/vim-go'
 
-Plugin 'kchmck/vim-coffee-script'
+"Plugin 'kchmck/vim-coffee-script'
 Plugin 'vim-ruby/vim-ruby'
 
 Plugin 'derekwyatt/vim-scala'
@@ -83,10 +98,11 @@ Plugin 'chaquotay/ftl-vim-syntax'
 
 Plugin 'niklasl/vim-rdf'
 
-Plugin 'wincent/command-t'
+"Plugin 'wincent/command-t'
 
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'airblade/vim-gitgutter'
 
 Plugin 'edkolev/tmuxline.vim'
@@ -100,11 +116,19 @@ Plugin 'tpope/vim-repeat'
 
 Plugin 'svermeulen/vim-easyclip'
 
-Plugin 'junegunn/fzf'
+"Plugin 'junegunn/fzf'
+"Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plugin 'junegunn/fzf.vim'
 
 Plugin 'lambdatoast/elm.vim'
 
 Plugin 'dietsche/vim-lastplace'
+
+Plugin 'udalov/kotlin-vim'
+Plugin 'elixir-editors/vim-elixir'
+
+Plugin 'shougo/vimproc.vim'
+"Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "
 call vundle#end()    
 
@@ -114,9 +138,9 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 " http://snk.tuxfamily.org/log/vim-256color-bce.html
 " Disable Background Color Erase (BCE) so that color schemes
 " work properly when Vim is used inside tmux and GNU screen.
-if &term =~ '256color'
-  set t_ut=
-endif
+"if &term =~ '256color'
+"  set t_ut=
+"endif
 
 
 " Do I have to do this?
@@ -138,7 +162,8 @@ let g:go_fmt_autosave = 0
 
 au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
 
-set clipboard=unnamed
+set clipboard=unnamedplus
+"set clipboard=unnamed
 set wildmenu
 set wildmode=longest:full,full
 
@@ -162,13 +187,13 @@ endfunction
 let &t_SI .= WrapForTmux("\<Esc>[?2004h")
 let &t_EI .= WrapForTmux("\<Esc>[?2004l")
 
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
+"function! XTermPasteBegin()
+"  set pastetoggle=<Esc>[201~
+"  set paste
+"  return ""
+"endfunction
 
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+"inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
 syntax enable
 
@@ -181,8 +206,8 @@ let g:airline_section_y='%{fugitive#statusline()}' " Git
 "set statusline=%F 
 
 
-let g:CommandTFileScanner="find"
-let g:CommandTCancelMap="<C-x>"
+"let g:CommandTFileScanner="find"
+"let g:CommandTCancelMap="<C-x>"
 
 "let g:airline#extensions#tabline#enabled = 1
 
@@ -196,9 +221,7 @@ let g:tmuxline_preset = 'tmux'
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
- 
 "Platinum Searcher
-
 nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 if executable('pt')
   let g:unite_source_grep_command = 'pt'
@@ -219,8 +242,31 @@ autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 autocmd CursorMoved * :set relativenumber
 
+autocmd QuickFixCmdPost *grep* cwindow
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 " if has("autocmd")
 "  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " endif
+
+"set rtp+=~/.fzf
+"
+" Unite
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+"nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+"nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+"nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+"nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+"nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+
+" Custom mappings for the unite buffer
+"autocmd FileType unite call s:unite_settings()
+"function! s:unite_settings()
+"  " Play nice with supertab
+"  let b:SuperTabDisabled=1
+"  " Enable navigation with control-j and control-k in insert mode
+"  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+"  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+"endfunction

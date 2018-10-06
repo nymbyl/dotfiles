@@ -1,0 +1,40 @@
+[global_config]
+  title_hide_sizetext = True
+  title_transmit_bg_color = "#ededed"
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  title_transmit_fg_color = "#080808"
+  title_inactive_bg_color = "#ededed"
+[keybindings]
+[profiles]
+  [[default]]
+    use_system_font = False
+    font = DejaVu Sans Mono 14
+    background_darkness = 0.73
+    scrollback_lines = 5120
+    background_type = transparent
+    scrollbar_position = hidden
+    foreground_color = "#00ff00"
+    show_titlebar = False
+    cursor_shape = ibeam
+    copy_on_selection = True
+    allow_bold = False
+    scrollback_infinite = True
+#[layouts]
+#  [[default]]
+#    [[[window0]]]
+#      type = Window
+#      parent = ""
+#      size = 800, 1000
+#    [[[pane0]]]
+#      type = VPaned
+#      parent = window0
+#    [[[child1]]]
+#      type = Terminal
+#      parent = pane0
+#      profile = default
+#    [[[child2]]]
+#      type = Terminal
+#      parent = pane0
+#      profile = default
+[plugins]
+
